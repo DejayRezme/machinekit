@@ -58,12 +58,12 @@
 
 	/* ------ SENSORS ------ */
 
-		"P8.8",		/* gpio2.3    #X_MIN */
 		"P8.9",		/* gpio2.5    #X_MAX */
-		"P8.10",	/* gpio2.4    #Y_MIN */
+		"P8.8",		/* gpio2.3    #X_MIN */
 		"P8.14",	/* gpio0.26   #Y_MAX */
-		"P8.17",	/* gpio0.27   #Z_MIN */
+		"P8.10",	/* gpio2.4    #Y_MIN */
 		"P8.18",	/* gpio2.1    #Z_MAX */
+		"P8.17",	/* gpio0.27   #Z_MIN */
 
 	/* ------ ADC ------ */
 

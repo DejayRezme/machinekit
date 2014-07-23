@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <pyvcp>
-<hbox>
+ <hbox>
   <label>
     <text>"Extruder Temp:"</text>
   </label>
@@ -9,12 +9,13 @@
     <halpin>"E0.Temp.set"</halpin>
     <format>"3.1f"</format>
   </number>
-</hbox>
-  <bar>
-    <halpin>"E0.Temp"</halpin>
-    <max_>300</max_>
-  </bar>
-<hbox>
+ </hbox>
+ <bar>
+  <halpin>"E0.Temp"</halpin>
+  <max_>300</max_>
+ </bar>
+  
+ <hbox>
   <label>
     <text>"Bed Temp:"</text>
   </label>
@@ -23,9 +24,51 @@
     <halpin>"Bed.Temp.set"</halpin>
     <format>"3.1f"</format>
   </number>
-</hbox>
-  <bar>
-    <halpin>"Bed.Temp"</halpin>
-    <max_>300</max_>
-  </bar>
+ </hbox>
+ <bar>
+  <halpin>"Bed.Temp"</halpin>
+  <max_>300</max_>
+ </bar>
+  
+  
+
+  <label>
+    <text>"axis.0.home-sw-in"</text>
+  </label>
+  <led>
+    <halpin>"axis.0.home-sw-in"</halpin>
+  </led>
+  
+  <label>
+    <text>"axis.1.home-sw-in"</text>
+  </label>
+  <led>
+    <halpin>"axis.1.home-sw-in"</halpin>
+  </led>
+  
+  <label>
+    <text>"axis.2.home-sw-in"</text>
+  </label>
+  <led>
+    <halpin>"axis.2.home-sw-in"</halpin>
+  </led>
+  
+ <hbox>
+  <label>
+    <text>"FSR:"</text>
+  </label>
+  <number>
+    <halpin>"FSR.resistance"</halpin>
+    <format>"6.0f"</format>
+  </number>
+  <led>
+    <halpin>"FSR.trigger"</halpin>
+  </led>
+  <button>
+    <halpin>"FSR.reset"</halpin>
+    <text>"Reset"</text> 
+</button>
+ </hbox>
+<!-- -->
+
 </pyvcp>

@@ -29,12 +29,20 @@ loadrt hal_bb_gpio output_pins=107,126,224,226 input_pins=108,109,110,114,117,11
 loadrt [PRUCONF](DRIVER) prucode=$(LINUXCNC_HOME)/[PRUCONF](PRUBIN) [PRUCONF](CONFIG)
 loadrt pid num_chan=2
 loadrt limit1 count=2
-loadrt pepper count=1
+loadrt pepper
+#loadrt pepper count=1
 
 # Python user-mode HAL module to read ADC value and generate a thermostat output for PWM
 # t = Thermistor table (only epcos_B57560G1104 or 1 supported for now)
 # a = analog input channel
 loadusr -Wn Therm ../ReadTemp.py -n Therm --num_chan 2 -t 1 1 -a 4 5
+
+# Python user-mode HAL module to read FSR value
+loadusr -Wn FSR ../ReadFSR.py -n FSR -a 6
+net bed.FSR.resistance <= FSR.resistance
+net bed.FSR.trigger <= FSR.trigger
+net bed.FSR.reset <= FSR.reset
+net bed.FSR.trigger <= motion.probe-input
 
 #used for comparing temperature set value with actual for waiting on temperature
 loadrt wcomp count=1
@@ -107,7 +115,9 @@ setp [PRUCONF](DRIVER).stepgen.00.dirpin           0x4D
 # because column C is connected to the X-axis output
 # the BeBoPr++ signal needs to be X-max means P8.9
 net home-x bb_gpio.p8.in-09 => axis.0.home-sw-in
-setp bb_gpio.p8.in-09.invert 1 
+#setp bb_gpio.p8.in-09.invert 1 
+
+net bed.fsr bb_gpio.p8.in-10
  
 # ################
 # Y [1] Axis = column A
@@ -149,8 +159,8 @@ setp [PRUCONF](DRIVER).stepgen.01.dirpin           0x4F
 
 # because column A is connected to the Y-axis output
 # the BeBoPr++ signal needs to be Y-max means P8.14
-net home-y bb_gpio.p8.in-14 => axis.1.home-sw-in
-setp bb_gpio.p8.in-14.invert 1
+net home-y bb_gpio.p8.in-08 => axis.1.home-sw-in
+#setp bb_gpio.p8.in-14.invert 1
 
 # ################
 # Z [2] Axis = column B
@@ -192,8 +202,8 @@ setp [PRUCONF](DRIVER).stepgen.02.dirpin           0x51
 
 # because column B is connected to the Z-axis output
 # the BeBoPr++ signal needs to be Z-max means P8.18
-net home-z bb_gpio.p8.in-18 => axis.2.home-sw-in
-setp bb_gpio.p8.in-18.invert 1
+net home-z bb_gpio.p8.in-14 => axis.2.home-sw-in
+#setp bb_gpio.p8.in-18.invert 1
  
 # ################
 # A [3] Axis (Extruder 1)
@@ -412,7 +422,8 @@ setp hal_pru_generic.pwmgen.00.out.02.value     0.0
 net e0.temp.meas    <= Therm.temp0
 net e0.temp.meas    => pid.0.feedback
 
-sets e0.temp.set  0
+# changed from 0 to -100 to avoid disconnected heat stuff
+sets e0.temp.set  -100
 net e0.temp.set     => pid.0.command
 
 net e0.heater  <= pid.0.output
@@ -428,7 +439,8 @@ setp limit1.0.min 0
 net bed.temp.meas    <= Therm.temp1
 net bed.temp.meas    => pid.1.feedback
 
-sets bed.temp.set  0
+# changed from 0 to -100 to avoid disconnected heat stuff
+sets bed.temp.set  -100
 net bed.temp.set     => pid.1.command
 
 net bed.heater  <= pid.1.output

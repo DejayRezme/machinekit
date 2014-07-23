@@ -6,3 +6,10 @@ net e0.temp.meas => pyvcp.E0.Temp
 net bed.temp.set  => pyvcp.Bed.Temp.set
 net bed.temp.meas => pyvcp.Bed.Temp
 
+net home-x => pyvcp.axis.0.home-sw-in
+net home-y => pyvcp.axis.1.home-sw-in
+net home-z => pyvcp.axis.2.home-sw-in
+
+net bed.FSR.resistance => pyvcp.FSR.resistance
+net bed.FSR.trigger => pyvcp.FSR.trigger
+net bed.FSR.reset => pyvcp.FSR.reset
