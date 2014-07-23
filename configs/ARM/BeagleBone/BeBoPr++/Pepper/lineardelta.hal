@@ -30,7 +30,6 @@ loadrt [PRUCONF](DRIVER) prucode=$(LINUXCNC_HOME)/[PRUCONF](PRUBIN) [PRUCONF](CO
 loadrt pid num_chan=2
 loadrt limit1 count=2
 loadrt pepper
-#loadrt pepper count=1
 
 # Python user-mode HAL module to read ADC value and generate a thermostat output for PWM
 # t = Thermistor table (only epcos_B57560G1104 or 1 supported for now)
